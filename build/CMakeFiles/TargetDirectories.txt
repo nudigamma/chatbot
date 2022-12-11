@@ -1,3 +1,0 @@
-/home/nadim/source/repos/udacity/project3/build/CMakeFiles/membot.dir
-/home/nadim/source/repos/udacity/project3/build/CMakeFiles/edit_cache.dir
-/home/nadim/source/repos/udacity/project3/build/CMakeFiles/rebuild_cache.dir
