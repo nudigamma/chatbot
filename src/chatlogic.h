@@ -11,6 +11,7 @@ class GraphEdge;
 class GraphNode;
 
 class ChatLogic
+/** What do this class do */
 {
 private:
     //// STUDENT CODE
@@ -29,7 +30,7 @@ private:
     ChatBotPanelDialog *_panelDialog;
 
     // proprietary type definitions
-    typedef std::vector<std::pair<std::string, std::string>> tokenlist;
+    using tokenlist =  std::vector<std::pair<std::string, std::string>>;// this one can be a map 
 
     // proprietary functions
     template <typename T>
