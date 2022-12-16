@@ -18,7 +18,7 @@ ChatBot::ChatBot()
 }
 
 // constructor WITH memory allocation
-ChatBot::ChatBot(std::string filename)
+ChatBot::ChatBot(std::string filename) : m_filename{filename}
 {
     std::cout << "ChatBot Constructor" << std::endl;
     
@@ -27,7 +27,7 @@ ChatBot::ChatBot(std::string filename)
     _rootNode = nullptr;
 
     // load image into heap memory
-    _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
+    _image = new wxBitmap(m_filename, wxBITMAP_TYPE_PNG);
 }
 
 ChatBot::~ChatBot()
@@ -44,7 +44,55 @@ ChatBot::~ChatBot()
 
 //// STUDENT CODE
 ////
+ChatBot::ChatBot(const ChatBot & chatbot)
+{
+    this->m_filename = chatbot.m_filename;
+    this->_image= new wxBitmap(this->m_filename,wxBITMAP_TYPE_PNG);
+    this->_currentNode = chatbot._currentNode;
+    this->_rootNode = chatbot._rootNode;
+    this->_chatLogic = chatbot._chatLogic;
+    std::cout << "ChatBot copy contructor \n";
+}
+// Assignment operator 
+ChatBot & ChatBot::operator =(const ChatBot & chatbot)
+{
+    
+    if (this == &chatbot)
+    {
+        return *this;
+    }
+    delete this->_image;
+    this->m_filename = chatbot.m_filename;
+    // important to create another memory allocation or we will have
+    // have aliasing 
+    this->_image = new wxBitmap(this->m_filename,wxBITMAP_TYPE_PNG);
+    this->_currentNode = chatbot._currentNode;
+    this->_rootNode = chatbot._rootNode;
+    this->_chatLogic = chatbot._chatLogic;
+    std::cout << "ChatBot copy assignemt  \n";
+    return *this;
+}
+// move contructor 
 
+ChatBot::ChatBot(ChatBot && chatbot) noexcept 
+{
+    m_filename = std::exchange(chatbot.m_filename,"");
+    _image = std::exchange(chatbot._image,NULL);
+    _currentNode = std::exchange(chatbot._currentNode,nullptr);
+    _rootNode = std::exchange(chatbot._rootNode,nullptr);
+    _chatLogic = std::exchange(chatbot._chatLogic,nullptr);
+    std::cout << "Move Constructor \n";
+}
+// move assignemnet 
+
+ChatBot & ChatBot::operator=(ChatBot&& chatbot) noexcept 
+{
+    std::swap(m_filename,chatbot.m_filename);
+    std::swap(_image, chatbot._image);
+    std::swap(_currentNode,chatbot._currentNode);
+    std::swap(_rootNode, chatbot._rootNode);
+    std::swap(_chatLogic,chatbot._chatLogic);
+}
 ////
 //// EOF STUDENT CODE
 
