@@ -72,12 +72,12 @@ ChatBot & ChatBot::operator =(const ChatBot & chatbot)
     std::cout << "ChatBot copy assignemt  \n";
     return *this;
 }
-// move contructor 
 
-ChatBot::ChatBot(ChatBot && chatbot) noexcept 
+// move contructor 
+ChatBot::ChatBot(ChatBot && chatbot) 
 {
     m_filename = std::exchange(chatbot.m_filename,"");
-    _image = std::exchange(chatbot._image,NULL);
+    std::swap(_image, chatbot._image);
     _currentNode = std::exchange(chatbot._currentNode,nullptr);
     _rootNode = std::exchange(chatbot._rootNode,nullptr);
     _chatLogic = std::exchange(chatbot._chatLogic,nullptr);
@@ -85,13 +85,14 @@ ChatBot::ChatBot(ChatBot && chatbot) noexcept
 }
 // move assignemnet 
 
-ChatBot & ChatBot::operator=(ChatBot&& chatbot) noexcept 
+ChatBot & ChatBot::operator=(ChatBot&& chatbot) 
 {
     std::swap(m_filename,chatbot.m_filename);
     std::swap(_image, chatbot._image);
     std::swap(_currentNode,chatbot._currentNode);
     std::swap(_rootNode, chatbot._rootNode);
     std::swap(_chatLogic,chatbot._chatLogic);
+    return *this;
 }
 ////
 //// EOF STUDENT CODE
