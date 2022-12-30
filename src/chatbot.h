@@ -13,7 +13,6 @@ class ChatBot
 private:
     // data handles (owned)
     wxBitmap *_image; // avatar image
-    std::string m_filename;
     // data handles (not owned)
     GraphNode *_currentNode;
     GraphNode *_rootNode;

@@ -134,7 +134,7 @@ ChatBotPanelDialog::~ChatBotPanelDialog()
 {
     //// STUDENT CODE
     ////
-
+    std::cout << " CHatPanelDialog Destructor\n";
 
     ////
     //// EOF STUDENT CODE

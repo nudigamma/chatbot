@@ -18,7 +18,7 @@ ChatBot::ChatBot()
 }
 
 // constructor WITH memory allocation
-ChatBot::ChatBot(std::string filename) : m_filename{filename}
+ChatBot::ChatBot(std::string filename) 
 {
     std::cout << "ChatBot Constructor" << std::endl;
     
@@ -27,7 +27,7 @@ ChatBot::ChatBot(std::string filename) : m_filename{filename}
     _rootNode = nullptr;
 
     // load image into heap memory
-    _image = new wxBitmap(m_filename, wxBITMAP_TYPE_PNG);
+    _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
 }
 
 ChatBot::~ChatBot()
@@ -46,8 +46,8 @@ ChatBot::~ChatBot()
 ////
 ChatBot::ChatBot(const ChatBot & chatbot)
 {
-    this->m_filename = chatbot.m_filename;
-    this->_image= new wxBitmap(this->m_filename,wxBITMAP_TYPE_PNG);
+   
+    this->_image= new wxBitmap(*chatbot._image);
     this->_currentNode = chatbot._currentNode;
     this->_rootNode = chatbot._rootNode;
     this->_chatLogic = chatbot._chatLogic;
@@ -61,11 +61,12 @@ ChatBot & ChatBot::operator =(const ChatBot & chatbot)
     {
         return *this;
     }
-    delete this->_image;
-    this->m_filename = chatbot.m_filename;
+    if(_image != NULL )
+        delete this->_image;
+    
     // important to create another memory allocation or we will have
     // have aliasing 
-    this->_image = new wxBitmap(this->m_filename,wxBITMAP_TYPE_PNG);
+    this->_image = new wxBitmap(*chatbot._image);
     this->_currentNode = chatbot._currentNode;
     this->_rootNode = chatbot._rootNode;
     this->_chatLogic = chatbot._chatLogic;
@@ -76,8 +77,8 @@ ChatBot & ChatBot::operator =(const ChatBot & chatbot)
 // move contructor 
 ChatBot::ChatBot(ChatBot && chatbot) 
 {
-    m_filename = std::exchange(chatbot.m_filename,"");
-    std::swap(_image, chatbot._image);
+    
+    this->_image = new wxBitmap(*chatbot._image);
     _currentNode = std::exchange(chatbot._currentNode,nullptr);
     _rootNode = std::exchange(chatbot._rootNode,nullptr);
     _chatLogic = std::exchange(chatbot._chatLogic,nullptr);
@@ -87,11 +88,12 @@ ChatBot::ChatBot(ChatBot && chatbot)
 
 ChatBot & ChatBot::operator=(ChatBot&& chatbot) 
 {
-    std::swap(m_filename,chatbot.m_filename);
-    std::swap(_image, chatbot._image);
+    
+    this->_image = new wxBitmap(*chatbot._image);
     std::swap(_currentNode,chatbot._currentNode);
     std::swap(_rootNode, chatbot._rootNode);
     std::swap(_chatLogic,chatbot._chatLogic);
+    std:: cout << "Copy Contructor\n";
     return *this;
 }
 ////
