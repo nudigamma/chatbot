@@ -79,8 +79,7 @@ ChatBot & ChatBot::operator =(const ChatBot & chatbot)
 ChatBot::ChatBot(ChatBot && chatbot) 
 {
     
-    _image = src._image;
-    src._image = NULL;
+    this->_image = new wxBitmap(*chatbot._image); // I AM NOT SURE HOW TO MOVE THIS, I TRIED EVERYTHING , std::move ( ), _image= chatbot._image ; chatbot._image = NULL;
     _currentNode = std::exchange(chatbot._currentNode,nullptr);
     _rootNode = std::exchange(chatbot._rootNode,nullptr);
     _chatLogic = std::exchange(chatbot._chatLogic,nullptr);
@@ -91,8 +90,7 @@ ChatBot::ChatBot(ChatBot && chatbot)
 ChatBot & ChatBot::operator=(ChatBot&& chatbot) 
 {
     
-     _image = src._image;
-    src._image = NULL;
+    this->_image = new wxBitmap(*chatbot._image); // I AM NOT SURE HOW TO MOVE THIS, I TRIED EVERYTHING , std::move ( ), _image= chatbot._image ; chatbot._image = NULL;
     std::swap(_currentNode,chatbot._currentNode);
     std::swap(_rootNode, chatbot._rootNode);
     std::swap(_chatLogic,chatbot._chatLogic);
