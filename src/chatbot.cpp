@@ -71,6 +71,7 @@ ChatBot & ChatBot::operator =(const ChatBot & chatbot)
     this->_currentNode = chatbot._currentNode;
     this->_rootNode = chatbot._rootNode;
     this->_chatLogic = chatbot._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
     std::cout << "ChatBot copy assignemt  \n";
     return *this;
 }
@@ -83,6 +84,7 @@ ChatBot::ChatBot(ChatBot && chatbot)
     _currentNode = std::exchange(chatbot._currentNode,nullptr);
     _rootNode = std::exchange(chatbot._rootNode,nullptr);
     _chatLogic = std::exchange(chatbot._chatLogic,nullptr);
+    _chatLogic->SetChatbotHandle(this);
     std::cout << "Move Constructor \n";
 }
 // move assignemnet 
@@ -94,6 +96,7 @@ ChatBot & ChatBot::operator=(ChatBot&& chatbot)
     std::swap(_currentNode,chatbot._currentNode);
     std::swap(_rootNode, chatbot._rootNode);
     std::swap(_chatLogic,chatbot._chatLogic);
+    _chatLogic->SetChatbotHandle(this);
     std:: cout << "Move Assignment \n";
     return *this;
 }
